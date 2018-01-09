@@ -1,0 +1,16 @@
+#!/bin/bash
+P1=`ps -ef | grep start | grep 20001`
+P2=`ps -ef | grep start | grep 20002`
+P3=`ps -ef | grep start | grep 20003`
+
+if ["$P1"=""]; then
+./start 20001 &
+fi
+if ["$P2"=""]; then
+./start 20002 &
+fi
+if ["$P3"=""]; then
+./start 20003 &
+fi
+
+nohup ./bash.sh &
