@@ -1,0 +1,55 @@
+#!/bin/bash
+
+function seed_random(){
+declare -a a
+for i in {0..51}; do
+a[$i]=$i
+done
+l=51
+while [ $l -gt 0 ]; do
+	m=$(($RANDOM % (l+1)))
+	tmp=${a[$l]}
+	a[$l]=${a[$m]}
+	a[$m]=$tmp
+        let l=l-1
+done
+echo ${a[*]}
+}
+
+function deal_cards(){
+arr=($(echo "$@"))
+huase=("fangkuai" "hongtao" "meihua" "heitao")
+p1=(0 4 8 12 16 20 24 28 32 36 40 44 48)
+p2=(1 5 9 13 17 21 25 29 33 37 41 45 49)
+p3=(2 6 10 14 18 22 26 30 34 38 42 46 50)
+p4=(3 7 11 15 19 23 27 31 35 39 43 47 51)
+
+for j in {0..51};do
+	point[$j]=$(((j / 4) + 1))
+
+done
+for m in {0..51};do
+	card[$m]=${huase[$((m % 4))]}
+done
+printf "first person: \n"
+for q in ${p1[@]};do
+	printf " %s %d " ${card[${arr[$q]}]}  ${point[${arr[$q]}]}
+done
+printf "\nsecond person: \n"
+for w in ${p2[@]};do
+	printf " %s %d " ${card[${arr[$w]}]}  ${point[${arr[$w]}]}
+done
+printf "\nThird person: \n"
+for e in ${p3[@]};do
+	printf " %s %d " ${card[${arr[$e]}]}  ${point[${arr[$e]}]}
+done
+printf "\nForth person: \n"
+for r in ${p4[@]};do
+	printf " %s %d " ${card[${arr[$r]}]}  ${point[${arr[$r]}]}
+done
+
+}
+
+
+b=(`seed_random`)
+deal_cards "${b[*]}"
